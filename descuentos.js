@@ -1,7 +1,6 @@
 
 /**Nuestros clientes están muy felices de poder calcular el precio final de sus productos después del descuento, pero la tienda tiene una nueva solicitud para nosotros: implementar descuentos con cupones. */
 
-
 const cupones = [
     {
         clave: 'DESC20',
@@ -17,15 +16,6 @@ const cupones = [
     },
 ]
 
-/**
- * Extrae el porcenje de descuento a partir de la clave del cupon de descuento
- * @param {*} clave 
- * @returns porcentaje
- */
-function extraerDescuentoDeCupon(clave){
-    const cupon = cupones.find(cupon => cupon.clave === clave)
-    return cupon.porcentaje
-}
 
 /**
  * Calcula el precio con el descuento
@@ -38,32 +28,20 @@ function calcularPrecioConDescuento(precio,descuento){
     const precioConDescuento = (precio * porcentajePrecioConDescuento)/100    
     return precioConDescuento;
 }
-/**
- * Obtiene el porcentaje de descuento
- * @returns discount
- */
-function obtenerDescuento(){
-    const existeCupon = document.getElementById("InputCupon").value;
-    if(existeCupon){
-        const InputCupon = document.getElementById("InputCupon")
-        const cupon = InputCupon.value
-        return extraerDescuentoDeCupon(cupon);
-    }else{
-        const InputDiscount = document.getElementById("InputDiscount")
-        return InputDiscount.value
-
-    }    
-}
 
 /**
  * Muestra el precio con descuento
  */
 function onClickButtonPriceDiscount(){
-
     const inputPrice = document.getElementById("InputPrice")
     const price = inputPrice.value
+    
+    const InputCupon = document.getElementById("InputCupon")
+    const claveCupon = InputCupon.value
 
-    const discount = obtenerDescuento();
+    const cuponValido = cupones.find(cupon => cupon.clave === claveCupon)
+    const discount = cuponValido.porcentaje
+
     const precioConDescuento = calcularPrecioConDescuento(price,discount);
 
     const resultP = document.getElementById("ResultP");
